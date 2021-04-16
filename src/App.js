@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
 import Todo from './Todo';
 import db from './firebase';
-import firebase from 'firebase'
+import firebase from 'firebase';
+import FlipMove from 'react-flip-move';
 
-function App() {
+const App = () => {
   const [todos, setTodos] = useState([])
   const [input, setInput] = useState('');
 
@@ -26,22 +27,23 @@ function App() {
     setInput('');
 
   }
-
   return (
-    <div className="App">
+    <div className="app">
       <form>
-        <FormControl>
-          <InputLabel>Write a Todo</InputLabel>
-          <Input value={input} onChange={e => setInput(e.target.value)} />
+        <FormControl className="app__form-control" >
+          <InputLabel className="app_label">Write a Todo</InputLabel>
+          <Input value={input} onChange={e => setInput(e.target.value)} className="app__input" />
         </FormControl>
-        <Button variant="contained" color="primary" type='submpit' onClick={addTodo} disabled={!input}>
+        <Button variant="contained" color="primary" type='submit' onClick={addTodo} disabled={!input} className="app__btn">
           Add Todo
         </Button>
       </form>
       <ul>
-        {todos.map(todo => (
-          <Todo todo={todo} />
-        ))}
+        <FlipMove>
+          {todos.map(todo => (
+            <Todo todo={todo} key={todo.id} />
+          ))}
+        </FlipMove>
       </ul>
     </div>
   );
